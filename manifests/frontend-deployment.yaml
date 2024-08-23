@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-frontend
+spec:
+  selector:
+    matchLabels:
+      app: angular-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: angular-frontend
+    spec:
+      containers:
+      - name: angular-frontend
+        image: hadil0505/studentapp-frontend
+        ports:
+        - containerPort: 80
+

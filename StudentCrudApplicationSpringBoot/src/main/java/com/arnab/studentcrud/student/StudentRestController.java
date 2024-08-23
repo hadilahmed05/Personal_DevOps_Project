@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping({"/"})
 @CrossOrigin(
-        origins = {"http://localhost:4200"}
+        origins = {"http://98.71.45.41:8081"}
 )
-
 public class StudentRestController {
 
     @Autowired
@@ -20,7 +20,8 @@ public class StudentRestController {
     public StudentRestController() {
     }
 
-    @GetMapping({"/"})
+    // This should map to "/students" for GET requests
+    @GetMapping({"/students"})
     public List<Student> getAllStudents() {
         return this.studentService.getAllStudent();
     }
@@ -32,7 +33,7 @@ public class StudentRestController {
 
     @GetMapping({"/students/{id}"})
     public Student getStudentById(@PathVariable long id) {
-        return (Student)this.studentRepository.findById(id).get();
+        return this.studentRepository.findById(id).get();
     }
 
     @PutMapping({"/students/{id}"})
@@ -41,8 +42,7 @@ public class StudentRestController {
         uStudent.setName(student.getName());
         uStudent.setGrp(student.getGrp());
         uStudent.setAge(student.getAge());
-        Student updatedStudent = this.studentService.updateStudent(uStudent);
-        return updatedStudent;
+        return this.studentService.updateStudent(uStudent);
     }
 
     @DeleteMapping({"/students/{id}"})
@@ -50,4 +50,3 @@ public class StudentRestController {
         this.studentRepository.deleteById(id);
     }
 }
-
